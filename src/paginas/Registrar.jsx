@@ -42,7 +42,7 @@ const Registrar = () => {
         //Crear el usuario en la API
         try {
             const { data } = await axios.post(
-                "http://localhost:4000/api/usuarios",
+                `${import.meta.env.VITE_BACKEND_URL}/api/usuarios`,
                 { nombre, email, password }
             );
 
@@ -56,6 +56,10 @@ const Registrar = () => {
                 error: true,
             });
         }
+        setNombre("");
+        setEmail("");
+        setPassword("");
+        setRepetirPassword("");
     };
 
     const { msg } = alerta;
