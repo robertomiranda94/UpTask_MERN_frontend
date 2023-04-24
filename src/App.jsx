@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import RutaProtegida from "./layouts/RutaProtegida";
 import NuevoProyecto from "./paginas/NuevoProyecto";
 import { ProyectosProvider } from "./context/ProyectosProvider";
+import Proyecto from "./paginas/Proyecto";
 
 function App() {
     return (
@@ -40,6 +41,7 @@ function App() {
                                 path="crear-proyecto"
                                 element={<NuevoProyecto />}
                             />
+                            <Route path=":id" element={<Proyecto />} />
                         </Route>
                     </Routes>
                 </ProyectosProvider>

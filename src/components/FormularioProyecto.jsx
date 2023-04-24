@@ -1,13 +1,39 @@
 import { useState } from "react";
+import useProyectos from "../hooks/useProyectos";
+import Alerta from "./Alerta";
 
-const Formulario = () => {
+const FormularioProyecto = () => {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [fechaEntrega, setFechaEntrega] = useState("");
     const [cliente, setCliente] = useState("");
 
+    const { mostrarAlerta, alerta, submitProyecto } = useProyectos();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if ([nombre, descripcion, fechaEntrega, cliente].includes("")) {
+            mostrarAlerta({
+                msg: "Todos los campos son obligatorios",
+                error: true,
+            });
+            return;
+        }
+        // Pasar los datos hacia el provider
+        await submitProyecto({nombre, descripcion, fechaEntrega, cliente});
+
+        setNombre('');
+        setDescripcion('');
+        setFechaEntrega('');
+        setCliente('');
+    };
+    const { msg } = alerta;
     return (
-        <form className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow">
+        <form
+            className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow"
+            onSubmit={handleSubmit}
+        >
+            {msg && <Alerta alerta={alerta} />}
             <div className="mb-5">
                 <label
                     className="text-gray-700 uppercase font-bold text-sm"
@@ -48,7 +74,7 @@ const Formulario = () => {
                     className="text-gray-700 uppercase font-bold text-sm"
                     htmlFor="fecha-entrega"
                 >
-                    Nombre Proyecto
+                    Fecha de Entrega
                 </label>
 
                 <input
@@ -86,4 +112,4 @@ const Formulario = () => {
     );
 };
 
-export default Formulario;
+export default FormularioProyecto;
