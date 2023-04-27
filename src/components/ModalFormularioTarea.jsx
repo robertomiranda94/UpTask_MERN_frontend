@@ -22,7 +22,7 @@ const ModalFormularioTarea = () => {
         submitTarea,
     } = useProyectos();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if ([nombre, descripcion,fechaEntrega, prioridad].includes("")) {
@@ -32,7 +32,12 @@ const ModalFormularioTarea = () => {
             });
             return;
         }
-        submitTarea({ nombre, descripcion, fechaEntrega, prioridad, proyecto: params.id });
+        await submitTarea({ nombre, descripcion, fechaEntrega, prioridad, proyecto: params.id });
+
+        setNombre("");
+        setDescripcion("");
+        setFechaEntrega("");
+        setPrioridad("");
     };
 
     const { msg } = alerta;
