@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 const PRIORIDAD = ["Baja", "Media", "Alta"];
 
 const ModalFormularioTarea = () => {
+    const [id, setId] = useState("");
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [fechaEntrega, setFechaEntrega] = useState("");
@@ -20,7 +21,25 @@ const ModalFormularioTarea = () => {
         mostrarAlerta,
         alerta,
         submitTarea,
+        tarea
     } = useProyectos();
+
+    useEffect(() => {
+        if(tarea?._id) {
+            setId(tarea._id);
+            setNombre(tarea.nombre);
+            setDescripcion(tarea.descripcion);
+            setFechaEntrega(tarea.fechaEntrega?.split("T")[0]);
+            setPrioridad(tarea.prioridad);
+            return
+        }
+        setId("");
+        setNombre("");
+        setDescripcion("");
+        setFechaEntrega("");
+        setPrioridad("");
+
+    }, [tarea]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,8 +51,9 @@ const ModalFormularioTarea = () => {
             });
             return;
         }
-        await submitTarea({ nombre, descripcion, fechaEntrega, prioridad, proyecto: params.id });
-
+        await submitTarea({ id, nombre, descripcion, fechaEntrega, prioridad, proyecto: params.id });
+        
+        setId("");
         setNombre("");
         setDescripcion("");
         setFechaEntrega("");
@@ -108,7 +128,7 @@ const ModalFormularioTarea = () => {
                                         as="h3"
                                         className="text-lg leading-6 font-bold text-gray-900"
                                     >
-                                        <h1>Crear Tarea</h1>
+                                        {id ? "Editar Tarea" : "Crear Tarea"}
                                     </Dialog.Title>
 
                                     {msg && <Alerta alerta={alerta} />}
@@ -202,7 +222,7 @@ const ModalFormularioTarea = () => {
                                         <input
                                             type="submit"
                                             className="bg-sky-600 hover:bg-sky-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded"
-                                            value="Crear Tarea"
+                                            value={id ? 'Guardar Cambios' : 'Crear Tarea'}
                                         />
                                     </form>
                                 </div>
