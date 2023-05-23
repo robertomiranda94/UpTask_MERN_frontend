@@ -3,8 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import useProyectos from "../hooks/useProyectos";
 import ModalFormularioTarea from "../components/ModalFormularioTarea";
 import ModalEliminarTarea from "../components/ModalEliminarTarea";
+import ModalEliminarColaborador from "../components/ModalEliminarColaborador";
 import Tarea from "../components/Tarea";
 import Alerta from "../components/Alerta";
+import Colaborador from "../components/Colaborador";
 
 const Proyecto = () => {
     const params = useParams();
@@ -97,8 +99,23 @@ const Proyecto = () => {
                     <p className="text-center my-5 p-10">"No hay tareas"</p>
                 )}
             </div>
+
+            <div className="bg-white shadow mt-10 rounded-lg">
+                {proyecto.colaboradores?.length ? (
+                    proyecto.colaboradores?.map((colaborador) => (
+                        <Colaborador
+                            key={colaborador._id}
+                            colaborador={colaborador}
+                        />
+                    ))
+                ) : (
+                    <p className="text-center my-5 p-10">"No hay colaboradores"</p>
+                )}
+            </div>
+
             <ModalFormularioTarea />
             <ModalEliminarTarea />
+            <ModalEliminarColaborador />
         </>
     );
 };
