@@ -1,3 +1,4 @@
+import { ProyectosProvider } from "../context/ProyectosProvider";
 import useProyectos from "../hooks/useProyectos";
 
 const Colaborador = ({ colaborador }) => {

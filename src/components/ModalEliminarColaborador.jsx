@@ -2,14 +2,14 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import useProyectos from "../hooks/useProyectos";
 
-const ModalEliminarColaborador = () => {
+const modalEliminarColaborador = () => {
     const {
         handleModalEliminarColaborador,
-        ModalEliminarColaborador,
+        modalEliminarColaborador,
         eliminarColaborador,
     } = useProyectos();
     return (
-        <Transition.Root show={ModalEliminarColaborador} as={Fragment}>
+        <Transition.Root show={modalEliminarColaborador} as={Fragment}>
             <Dialog
                 as="div"
                 className="fixed z-10 inset-0 overflow-y-auto"
@@ -123,4 +123,4 @@ const ModalEliminarColaborador = () => {
     );
 };
 
-export default ModalEliminarColaborador;
+export default modalEliminarColaborador;
